@@ -7,6 +7,7 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+	<link rel="stylesheet" href="css/leaflet.css" />
 	<link rel="stylesheet" href="css/train.css" />
 	<!--[if lte IE 8]><link rel="stylesheet" href="../dist/leaflet.ie.css" /><![endif]-->
 
@@ -20,7 +21,7 @@
 	<script type="text/javascript">
 
 		var map = L.map('map')
-                           .setView(new L.LatLng(37.8, -96),6); 
+                           .setView(new L.LatLng(33.742613,-84.391479),9); 
                             //map.setMaxBounds(map.getBounds()); 
                 
                 //var southWest = new L.LatLng(14.944785,-135.791016),
@@ -31,14 +32,13 @@
 		var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
 			attribution: 'Map data &copy; 2013 OpenStreetMap contributors, Imagery &copy; 2013 CloudMade',
 			key: 'BC9A493B41014CAABB98F0471D759707',
-			styleId: 99928
+			styleId: 102489
 		}).addTo(map);
 
-                //22677
 		
 		var twitterIcon = L.icon({
-			iconUrl: 'twitter.png',
-			iconSize: [32, 37],
+			iconUrl: 'rrcross.png',
+			iconSize: [45,45],
 			iconAnchor: [16, 37],
 			popupAnchor: [0, -28]
 		});
@@ -54,9 +54,9 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h4>State Participation Percentage</h4>' +  (props ?
-				'<b>' + props.name + '</b><br />' + props.percentage + '% of total race participants'
-				: 'Hover over a state');
+			this._div.innerHTML = '' +  (props ?
+				'<b>' + props.name + '</b><br />' + props.number + ' incidents in the past "x" years<br /><div class="margin"><b>Incidents</b></div>' + props.incidents
+				: '<h4>Rail Crossing Information</h4> Hover over a rail crossing ');
 		};
 
 		info.addTo(map);

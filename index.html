@@ -20,7 +20,7 @@
 	<script type="text/javascript">
 
 		var map = L.map('map')
-                           .setView(new L.LatLng(37.8, -96),3); 
+                           .setView(new L.LatLng(37.8, -96),6); 
                             //map.setMaxBounds(map.getBounds()); 
                 
                 //var southWest = new L.LatLng(14.944785,-135.791016),
@@ -35,6 +35,14 @@
 		}).addTo(map);
 
                 //22677
+		
+		var twitterIcon = L.icon({
+			iconUrl: 'twitter.png',
+			iconSize: [32, 37],
+			iconAnchor: [16, 37],
+			popupAnchor: [0, -28]
+		});
+
                 
                 // control that shows state info on hover
 		var info = L.control();
@@ -54,45 +62,10 @@
 		info.addTo(map);
 
 
-		// get color depending on population density value
-                //fix colors
-		function getColor(d) {
-			return d > 1.35 ? '#02273c' :
-			       d > 1.15  ? '#03476e' :
-			       d > 0.95  ? '#045c8f' :
-			       d > 0.75  ? '#057cc1' :
-			       d > 0.55   ? '#079bf2' :
-			       d > 0.35   ? '#43b6fa' :
-			       d > 0.15   ? '#85d0fc' :
-                               d > 0.05   ? '#b7e3fd' :
-			                  '#e8f6fe';
-		}
-
-		function style(feature) {
-			return {
-				weight: 1,
-				opacity: 1,
-				color: '#C6C6C6',
-				dashArray: '3',
-				fillOpacity: 0.5,
-				fillColor: getColor(feature.properties.percentage)
-			};
-		}
-
 		function highlightFeature(e) {
 			var layer = e.target;
 
-			layer.setStyle({
-				weight: 5,
-				color: '#666',
-				dashArray: '',
-				fillOpacity: 0.7
-			});
-
-			if (!L.Browser.ie && !L.Browser.opera) {
-				layer.bringToFront();
-			}
-
+			
 			info.update(layer.feature.properties);
 		}
 
@@ -110,42 +83,20 @@
 		function onEachFeature(feature, layer) {
 			layer.on({
 				mouseover: highlightFeature,
-				mouseout: resetHighlight,
-				click: zoomToFeature
+				mouseout: resetHighlight
+				//click: zoomToFeature
 			});
 		}
 
-		geojson = L.geoJson(statesData, {
-			style: style,
+		geojson = L.geoJson(crossingData, {
+
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {icon: twitterIcon});
+			},
+			//style:style,
 			onEachFeature: onEachFeature
 		}).addTo(map);
 
-		
-
-
-		var legend = L.control({position: 'bottomright'});
-
-		legend.onAdd = function (map) {
-
-			var div = L.DomUtil.create('div', 'info legend'),
-				grades = [0, 0.10, 0.30, 0.50, 0.70, 0.90, 1.10, 1.30],
-				labels = [],
-				from, to;
-
-			for (var i = 0; i < grades.length; i++) {
-				from = grades[i];
-				to = grades[i + 1];
-
-				labels.push(
-					'<i style="background:' + getColor(from) + '"></i> ' +
-					from + (to ? '&ndash;' + to : '+'));
-			}
-
-			div.innerHTML = labels.join('<br>');
-			return div;
-		};
-
-		legend.addTo(map);
 
 	</script>
 </body>

@@ -17,11 +17,11 @@
 
 	<script src="js/leaflet.js"></script>
 
-	<script type="text/javascript" src="js/geo.js"></script>
+	<!--<script type="text/javascript" src="js/geo.js"></script>-->
 	<script type="text/javascript">
 
 		var map = L.map('map')
-                           .setView(new L.LatLng(33.742613,-84.391479),9); 
+                           .setView(new L.LatLng(33.742613,-84.391479),10); 
                             //map.setMaxBounds(map.getBounds()); 
                 
                 //var southWest = new L.LatLng(14.944785,-135.791016),
@@ -35,11 +35,43 @@
 			styleId: 102489
 		}).addTo(map);
 
+		var crossingData = {"type":"FeatureCollection","features":[
+			{"type":"Feature","id":"1","properties":{"name":"Jones Mill Road", "city":"(not applicable)", "county":"Gwinnett", "traffic":"27,270", "speed":"79", "trains":"24", "device":"Gates", "railroad":"Norfolk Southern <br />(with Amtrak operations)", "collisions":"6"},"geometry":{"type":"Point","coordinates":[-84.240206, 33.928277]}},
+			{"type":"Feature","id":"2","properties":{"name":"Rose Avenue", "city":"Douglasville", "county":"Douglas", "traffic":"5,220", "speed":"45", "trains":"31", "device":"Gates", "railroad":"Norfolk Southern <br />(with Amtrak operations)", "collisions":"4"},"geometry":{"type":"Point","coordinates":[-84.755104, 33.748767]}},
+			{"type":"Feature","id":"4","properties":{"name":"Welcome All Road", "city":"(not applicable)", "county":"Fulton", "traffic":"4,190", "speed":"40", "trains":"15", "device":"Gates", "railroad":"CSX", "collisions":"3"},"geometry":{"type":"Point","coordinates":[-84.520758, 33.649104]}},
+			{"type":"Feature","id":"5","properties":{"name":"Sylvan Road", "city":"Atlanta", "county":"Fulton", "traffic":"5,510", "speed":"30", "trains":"69", "device":"Gates", "railroad":"Norfolk Southern <br />(with Amtrak operations)", "collisions":"2"},"geometry":{"type":"Point","coordinates":[-84.418105, 33.726444]}},
+			{"type":"Feature","id":"7","properties":{"name":"Austell-Powder Springs Road", "city":"Austell", "county":"Douglas", "traffic":"7,690", "speed":"50", "trains":"70", "device":"Gates", "railroad":"Norfolk Southern", "collisions":"3"},"geometry":{"type":"Point","coordinates":[-84.617973, 33.816883]}},
+			{"type":"Feature","id":"9","properties":{"name":"Jonesboro Road", "city":"Union City", "county":"Fulton", "traffic":"6,420", "speed":"55", "trains":"15", "device":"Gates", "railroad":"CSX", "collisions":"3"},"geometry":{"type":"Point","coordinates":[-84.550625, 33.573098]}},
+			{"type":"Feature","id":"10","properties":{"name":"White Circle", "city":"(not applicable)", "county":"Cobb", "traffic":"1,900", "speed":"35", "trains":"29", "device":"Gates", "railroad":"CSX", "collisions":"3"},"geometry":{"type":"Point","coordinates":[-84.576302, 33.986301]}}
+			]};
 		
-		var twitterIcon = L.icon({
-			iconUrl: 'rrcross.png',
-			iconSize: [45,45],
-			iconAnchor: [16, 37],
+		var stopSign = {"type":"FeatureCollection","features":[
+			{"type":"Feature","id":"3","properties":{"name":"Valleywood Road", "city":"Tyrone", "county":"Fayette", "traffic":"1,900", "speed":"35", "trains":"13", "device":"Stop signs", "railroad":"CSX", "collisions":"1"},"geometry":{"type":"Point","coordinates":[-84.5967, 33.454117]}},
+			{"type":"Feature","id":"6","properties":{"name":"Central Avenue", "city":"Hapeville", "county":"Fulton", "traffic":"6,540", "speed":"25", "trains":"8", "device":"Stop signs", "railroad":"Norfolk Southern", "collisions":"0"},"geometry":{"type":"Point","coordinates":[-84.405946, 33.656787]}}
+			]};
+		
+		var crossbuckSign = {"type":"FeatureCollection","features":[
+			{"type":"Feature","id":"8","properties":{"name":"McLarin Road", "city":"Fairburn", "county":"Fulton", "traffic":"1,820", "speed":"50", "trains":"18", "device":"Crossbucks <br /> (X-shaped sign)", "railroad":"CSX", "collisions":"0"},"geometry":{"type":"Point","coordinates":[-84.6217, 33.537905]}}
+			]};
+		
+		var arms = L.icon({
+			iconUrl: 'images/arms.png',
+			iconSize: [70,70],
+			iconAnchor: [35,35],
+			popupAnchor: [0, -28]
+		});
+		
+		var stop = L.icon({
+			iconUrl: 'images/stop.png',
+			iconSize: [50,50],
+			iconAnchor: [25,25],
+			popupAnchor: [0, -28]
+		});
+		
+		var crossbucks = L.icon({
+			iconUrl: 'images/crossbucks.png',
+			iconSize: [50,50],
+			iconAnchor: [25,25],
 			popupAnchor: [0, -28]
 		});
 
@@ -52,11 +84,22 @@
 			this.update();
 			return this._div;
 		};
+		
+		/*props.name
+		props.city
+		props.county
+		props.traffic
+		props.speed
+		props.trains
+		props.device
+		props.railroad
+		props.collisions*/
 
 		info.update = function (props) {
 			this._div.innerHTML = '' +  (props ?
-				'<b>' + props.name + '</b><br />' + props.number + ' incidents in the past "x" years<br /><div class="margin"><b>Incidents</b></div>' + props.incidents
-				: '<h4>Rail Crossing Information</h4> Hover over a rail crossing ');
+				'<table><thead><table border="0"><tr><th colspan="2"><div class="header">'+props.name+'</div></th></tr></thead><tbody><tr><th><div class="loc center">City</div></th><th><div class="loc center">County</div></th></tr> <tr><td><div class="center bumpLeft">'+props.city+'</div></td><td><div class="center bumpLeft">'+props.county+'</div></td></tr> <tr><th>Collisions from <br /> 2008 - 2012</th><td>'+props.collisions+'</td></tr> <tr><th>Warning Device</th><td>'+props.device+'</td></tr> <tr><th>Railroad</th><td>'+props.railroad+'</td></tr> <tr><th>Trains per day</th><td>'+props.trains+'</td></tr> <tr><th>Max allowable speed <br />through crossing</th><td>'+props.speed+' mph</td></tr> <tr><th>Average vehicle <br/ > crossings</th><td>'+props.traffic+'/day</td></tr> </tbody></table>'
+				//'<b>' + props.name + '</b><br />' + props.railroad + ' collisions in the past "x" years<br /><div class="margin"><b>Collisions</b></div>' + props.collisions
+				: '<h4>Rail Crossing Information</h4> Click on a rail crossing for <br/> more information');
 		};
 
 		info.addTo(map);
@@ -70,6 +113,8 @@
 		}
 
 		var geojson;
+		var geojson2;
+		var geojson3;
 
 		function resetHighlight(e) {
 			geojson.resetStyle(e.target);
@@ -82,8 +127,8 @@
 
 		function onEachFeature(feature, layer) {
 			layer.on({
-				mouseover: highlightFeature,
-				mouseout: resetHighlight
+				click: highlightFeature,
+				//mouseout: resetHighlight
 				//click: zoomToFeature
 			});
 		}
@@ -91,7 +136,25 @@
 		geojson = L.geoJson(crossingData, {
 
 			pointToLayer: function (feature, latlng) {
-				return L.marker(latlng, {icon: twitterIcon});
+				return L.marker(latlng, {icon: arms});
+			},
+			//style:style,
+			onEachFeature: onEachFeature
+		}).addTo(map);
+		
+		geojson2 = L.geoJson(stopSign, {
+
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {icon: stop});
+			},
+			//style:style,
+			onEachFeature: onEachFeature
+		}).addTo(map);
+		
+		geojson3 = L.geoJson(crossbuckSign, {
+
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {icon: crossbucks});
 			},
 			//style:style,
 			onEachFeature: onEachFeature

@@ -1,3 +1,53 @@
 .margin{
    margin: 10px 0px 0px 0px;
 }
+
+table {
+    border-collapse: collapse;
+}
+table td, table th {
+    border: 1px solid;
+    border-color:#A3A3A3;
+    text-align:left;
+}
+table td{
+    padding-left:10px;
+}
+
+table th{
+    font-size:13px;
+}
+table tr:first-child th {
+    border-top: 0;
+}
+table tr:last-child td,
+table tr:last-child th{
+    border-bottom: 0;
+}
+table tr td:first-child,
+table tr th:first-child {
+    border-left: 0;
+}
+table tr td:last-child,
+table tr th:last-child {
+    border-right: 0;
+}
+
+.loc{
+  font-size: 12px;
+  font-weight:400;
+}
+
+.center{
+  text-align: center;
+}
+
+.bumpLeft{
+  margin-left:-10px;
+}
+
+.header{
+  font-size: 18px;
+  padding-bottom:5px;
+  text-align:center;
+}

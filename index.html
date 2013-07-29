@@ -47,11 +47,14 @@
 		
 		var stopSign = {"type":"FeatureCollection","features":[
 			{"type":"Feature","id":"3","properties":{"name":"Valleywood Road", "city":"Tyrone", "county":"Fayette", "traffic":"1,900", "speed":"35", "trains":"13", "device":"Stop signs", "railroad":"CSX", "collisions":"1"},"geometry":{"type":"Point","coordinates":[-84.5967, 33.454117]}},
-			{"type":"Feature","id":"6","properties":{"name":"Central Avenue", "city":"Hapeville", "county":"Fulton", "traffic":"6,540", "speed":"25", "trains":"8", "device":"Stop signs", "railroad":"Norfolk Southern", "collisions":"0"},"geometry":{"type":"Point","coordinates":[-84.405946, 33.656787]}}
+			]};
+		
+		var lightFlash = {"type":"FeatureCollection","features":[
+			{"type":"Feature","id":"6","properties":{"name":"Central Avenue", "city":"Hapeville", "county":"Fulton", "traffic":"6,540", "speed":"25", "trains":"8", "device":"Flashing Lights <br /><div class='small'>*Installation of gates<br /> scheduled in a future<br /> GDOT project</div>", "railroad":"Norfolk Southern", "collisions":"0"},"geometry":{"type":"Point","coordinates":[-84.405946, 33.656787]}}
 			]};
 		
 		var crossbuckSign = {"type":"FeatureCollection","features":[
-			{"type":"Feature","id":"8","properties":{"name":"McLarin Road", "city":"Fairburn", "county":"Fulton", "traffic":"1,820", "speed":"50", "trains":"18", "device":"Crossbucks <br /> (X-shaped sign)", "railroad":"CSX", "collisions":"0"},"geometry":{"type":"Point","coordinates":[-84.6217, 33.537905]}}
+			{"type":"Feature","id":"8","properties":{"name":"McLarin Road", "city":"Fairburn", "county":"Fulton", "traffic":"1,820", "speed":"50", "trains":"18", "device":"Crossbucks <br /> <div class='small'>(X-shaped sign)</div>", "railroad":"CSX", "collisions":"0"},"geometry":{"type":"Point","coordinates":[-84.6217, 33.537905]}}
 			]};
 		
 		var arms = L.icon({
@@ -63,6 +66,13 @@
 		
 		var stop = L.icon({
 			iconUrl: 'images/stop2.png',
+			iconSize: [40,70],
+			iconAnchor: [20,35],
+			popupAnchor: [0, -28]
+		});
+		
+		var lights = L.icon({
+			iconUrl: 'images/lights.png',
 			iconSize: [40,70],
 			iconAnchor: [20,35],
 			popupAnchor: [0, -28]
@@ -115,6 +125,7 @@
 		var geojson;
 		var geojson2;
 		var geojson3;
+		var geojson4;
 
 		function resetHighlight(e) {
 			geojson.resetStyle(e.target);
@@ -155,6 +166,15 @@
 
 			pointToLayer: function (feature, latlng) {
 				return L.marker(latlng, {icon: crossbucks});
+			},
+			//style:style,
+			onEachFeature: onEachFeature
+		}).addTo(map);
+		
+		geojson4 = L.geoJson(lightFlash, {
+
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {icon: lights});
 			},
 			//style:style,
 			onEachFeature: onEachFeature

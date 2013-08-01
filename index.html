@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Train</title>
+	<title>Train Crossing Map</title>
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,20 @@
 	<!--[if lte IE 8]><link rel="stylesheet" href="../dist/leaflet.ie.css" /><![endif]-->
 
 </head>
+<style>
+	body{
+		font-family: 'helvetica';
+		font-size: 13px;
+	}
+	p a{
+		color: #B5B5B5;
+	}
+</style>
 <body>
+	<p>Check out the map below displaying the 10 most dangerous railroad crossings in the metro area. Clicking on an
+	icon will allow you to view detailed information about the crossing such as its location, warning device
+	and the number of collisions that have occurred at the crossing over the past five years. The map draws from
+	data collected by the <a href="http://safetydata.fra.dot.gov/OfficeofSafety/default.aspx">Federal Railroad Administration</a> between 2008 and 2012.</p>
 	<div id="map"></div>
 
 	<script src="js/leaflet.js"></script>
@@ -42,11 +55,11 @@
 			{"type":"Feature","id":"5","properties":{"name":"Sylvan Road", "city":"Atlanta", "county":"Fulton", "traffic":"5,510", "speed":"30", "trains":"69", "device":"Gates", "railroad":"Norfolk Southern <br />(with Amtrak operations)", "collisions":"2"},"geometry":{"type":"Point","coordinates":[-84.418105, 33.726444]}},
 			{"type":"Feature","id":"7","properties":{"name":"Austell-Powder Springs Road", "city":"Austell", "county":"Douglas", "traffic":"7,690", "speed":"50", "trains":"70", "device":"Gates", "railroad":"Norfolk Southern", "collisions":"3"},"geometry":{"type":"Point","coordinates":[-84.617973, 33.816883]}},
 			{"type":"Feature","id":"9","properties":{"name":"Jonesboro Road", "city":"Union City", "county":"Fulton", "traffic":"6,420", "speed":"55", "trains":"15", "device":"Gates", "railroad":"CSX", "collisions":"3"},"geometry":{"type":"Point","coordinates":[-84.550625, 33.573098]}},
-			{"type":"Feature","id":"10","properties":{"name":"White Circle", "city":"(not applicable)", "county":"Cobb", "traffic":"1,900", "speed":"35", "trains":"29", "device":"Gates", "railroad":"CSX", "collisions":"3"},"geometry":{"type":"Point","coordinates":[-84.576302, 33.986301]}}
+			{"type":"Feature","id":"10","properties":{"name":"White Circle", "city":"(not applicable)", "county":"Cobb", "traffic":"1,900", "speed":"35", "trains":"29", "device":"Gates", "railroad":"CSX", "collisions":"3"},"geometry":{"type":"Point","coordinates":[-84.576302, 33.986301]}},
+			{"type":"Feature","id":"3","properties":{"name":"Valleywood Road", "city":"Tyrone", "county":"Fayette", "traffic":"1,900", "speed":"35", "trains":"13", "device":"Gates <div class='small'>*Gates recently installed.<br /> Previous device was <br />a stop sign.</div>", "railroad":"CSX", "collisions":"1"},"geometry":{"type":"Point","coordinates":[-84.5967, 33.454117]}}
 			]};
 		
 		var stopSign = {"type":"FeatureCollection","features":[
-			{"type":"Feature","id":"3","properties":{"name":"Valleywood Road", "city":"Tyrone", "county":"Fayette", "traffic":"1,900", "speed":"35", "trains":"13", "device":"Stop signs", "railroad":"CSX", "collisions":"1"},"geometry":{"type":"Point","coordinates":[-84.5967, 33.454117]}},
 			]};
 		
 		var lightFlash = {"type":"FeatureCollection","features":[
